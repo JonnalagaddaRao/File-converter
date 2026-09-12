@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Convert Images to PDF & Formats — Fast, Free & 100% Private. Client-side processing with zero server uploads.">
+  <title>OmniConvert | Client-Side Image & PDF Suite</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- External CDN Libraries (Client-Side Only) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  <!-- Header & Navigation Bar -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#home" class="brand-logo" aria-label="OmniConvert Home">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <span class="brand-text">Omni<span class="brand-accent">Convert</span></span>
+        <span class="badge-client-side">100% Local</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link active" data-nav="home">Home</a></li>
+          <li><a href="#image-to-pdf" class="nav-link" data-nav="image-to-pdf">Image to PDF</a></li>
+          <li><a href="#format-converter" class="nav-link" data-nav="format-converter">Format Converter</a></li>
+          <li><a href="#privacy" class="nav-link" data-nav="privacy">Privacy & Security</a></li>
+          <li><a href="#about" class="nav-link" data-nav="about">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="icon-button" aria-label="Toggle dark/light theme" title="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Hamburger -->
+        <button id="mobile-menu-btn" class="icon-button mobile-only" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Navigation -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div class="mobile-drawer-content">
+      <ul class="mobile-nav-links">
+        <li><a href="#home" class="mobile-nav-link" data-nav="home">Home</a></li>
+        <li><a href="#image-to-pdf" class="mobile-nav-link" data-nav="image-to-pdf">Image to PDF</a></li>
+        <li><a href="#format-converter" class="mobile-nav-link" data-nav="format-converter">Format Converter</a></li>
+        <li><a href="#privacy" class="mobile-nav-link" data-nav="privacy">Privacy & Security</a></li>
+        <li><a href="#about" class="mobile-nav-link" data-nav="about">About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main View Container for SPA Hash Routing -->
+  <main id="app-viewport">
+
+    <!-- VIEW 1: HOME PAGE (#home) -->
+    <section id="view-home" class="view-section active">
+      <div class="hero-section">
+        <div class="container hero-container">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>Zero Server Uploads • In-Browser Processing</span>
+          </div>
+          <h1 class="hero-title">
+            Convert Images to PDF & Formats — <br>
+            <span class="gradient-text">Fast, Free & 100% Private</span>
+          </h1>
+          <p class="hero-subtitle">
+            Transform high-res photos into single or multi-page PDFs, convert between PNG, JPG, and WebP, 
+            and compress files without sending a single byte to an external server. Everything stays on your device.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#image-to-pdf" class="btn btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Convert Images to PDF</span>
+            </a>
+            <a href="#format-converter" class="btn btn-secondary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <span>Image Format Converter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Tool Cards Grid -->
+      <section class="tools-section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Explore Conversion Tools</h2>
+            <p class="section-description">Pick a tool to instantly launch the studio pre-configured for your workflow.</p>
+          </div>
+
+          <div class="tools-grid">
+            <!-- Tool 1: Image to PDF -->
+            <a href="#image-to-pdf" class="tool-card">
+              <div class="tool-icon-wrapper icon-pdf">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <path d="M9 15h6"></path>
+                </svg>
+              </div>
+              <div class="tool-content">
+                <h3 class="tool-title">Image to PDF</h3>
+                <p class="tool-description">Merge multiple JPG, PNG, WebP images into a single beautifully styled, printable PDF document.</p>
+              </div>
+              <div class="tool-arrow">
+                <span>Launch Tool</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+
+            <!-- Tool 2: JPG to PNG -->
+            <a href="#jpg-to-png" class="tool-card">
+              <div class="tool-icon-wrapper icon-png">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              </div>
+              <div class="tool-content">
+                <h3 class="tool-title">JPG to PNG</h3>
+                <p class="tool-description">Convert compressed JPG pictures into lossless PNG format with zero degradation.</p>
+              </div>
+              <div class="tool-arrow">
+                <span>Launch Tool</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+
+            <!-- Tool 3: PNG to JPG -->
+            <a href="#png-to-jpg" class="tool-card">
+              <div class="tool-icon-wrapper icon-jpg">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="tool-content">
+                <h3 class="tool-title">PNG to JPG</h3>
+                <p class="tool-description">Convert transparent or high-res PNG files to compact JPGs with customizable background fill.</p>
+              </div>
+              <div class="tool-arrow">
+                <span>Launch Tool</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+
+            <!-- Tool 4: WebP Converter -->
+            <a href="#webp-converter" class="tool-card">
+              <div class="tool-icon-wrapper icon-webp">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <div class="tool-content">
+                <h3 class="tool-title">WebP Converter</h3>
+                <p class="tool-description">Modern next-gen WebP image generator. Reduce web asset sizes by up to 80% with lossless quality.</p>
+              </div>
+              <div class="tool-arrow">
+                <span>Launch Tool</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature Highlights Section -->
+      <section class="features-section">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Engineered for Privacy & Performance</h2>
+            <p class="section-description">Experience the future of web utility apps with zero cloud latency and total file ownership.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 class="feature-title">Zero Server Uploads</h3>
+              <p class="feature-text">Your files never leave your computer. Conversions happen locally within your browser sandbox via Web Canvas & jsPDF.</p>
+            </div>
+
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <h3 class="feature-title">Blazing Fast Client Speed</h3>
+              <p class="feature-text">No network bottlenecks, no upload queues, and no wait times. Convert dozens of high-res photos in seconds.</p>
+            </div>
+
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 14 14"></polyline>
+                </svg>
+              </div>
+              <h3 class="feature-title">100% Free & Unlimited</h3>
+              <p class="feature-text">No daily file limits, no file size paywalls, no watermarks, and no signups required. Ever.</p>
+            </div>
+
+            <div class="feature-box">
+              <div class="feature-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+              </div>
+              <h3 class="feature-title">Automatic ZIP Bundling</h3>
+              <p class="feature-text">Converting multiple images? Our integrated JSZip engine packages your converted files into a clean archive instantly.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- VIEW 2: CONVERTER STUDIO (#image-to-pdf, #format-converter, presets) -->
+    <section id="view-converter" class="view-section">
+      <div class="container studio-container">
+        <!-- Studio Header Breadcrumb & Title -->
+        <div class="studio-header">
+          <div class="studio-titles">
+            <span id="studio-category" class="studio-badge">Image to PDF Studio</span>
+            <h1 id="studio-title" class="studio-main-heading">Convert Images to PDF</h1>
+            <p id="studio-desc" class="studio-sub-heading">Upload or drag and drop your photos, arrange pages, and generate your PDF.</p>
+          </div>
+          <div class="studio-actions-top">
+            <button id="btn-clear-all" class="btn btn-outline-danger btn-sm hidden" title="Remove all uploaded images">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Clear All</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="studio-layout">
+          <!-- Left Column: Dropzone & Thumbnail Queue -->
+          <div class="studio-main-column">
+            <!-- Interactive Drag and Drop Zone -->
+            <div id="dropzone" class="dropzone-box" tabindex="0" role="region" aria-label="Image Upload Drag and Drop Area">
+              <input type="file" id="file-input" multiple accept="image/png,image/jpeg,image/webp,image/svg+xml,image/bmp,image/gif" class="visually-hidden">
+              
+              <div class="dropzone-content">
+                <div class="dropzone-icon-circle">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <h3 class="dropzone-title">Drag & drop image files here</h3>
+                <p class="dropzone-subtitle">or click to browse from your computer</p>
+                
+                <div class="dropzone-meta">
+                  <span class="file-types-tag">Supports PNG, JPG, JPEG, WEBP, SVG</span>
+                  <span class="clipboard-tip">💡 You can also paste images with <kbd>Ctrl</kbd> + <kbd>V</kbd></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Queue Toolbar (Shown when files exist) -->
+            <div id="queue-toolbar" class="queue-toolbar hidden">
+              <div class="queue-stats">
+                <span class="stats-counter"><strong id="stat-count">0</strong> images</span>
+                <span class="stats-separator">•</span>
+                <span id="stat-size" class="stats-size">0 KB</span>
+              </div>
+              <div class="queue-actions">
+                <label for="file-input-add" class="btn btn-secondary btn-sm btn-add-more">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Add More Files</span>
+                </label>
+                <input type="file" id="file-input-add" multiple accept="image/png,image/jpeg,image/webp,image/svg+xml,image/bmp,image/gif" class="visually-hidden">
+              </div>
+            </div>
+
+            <!-- Thumbnail Queue Container -->
+            <div id="queue-container" class="queue-container hidden">
+              <div class="queue-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Drag cards or use <kbd>↑</kbd> <kbd>↓</kbd> buttons to reorder pages/files before converting.</span>
+              </div>
+              <div id="thumbnail-grid" class="thumbnail-grid" role="list"></div>
+            </div>
+
+            <!-- Empty State Prompt -->
+            <div id="empty-state" class="empty-state">
+              <div class="empty-state-illustration">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+              </div>
+              <p>No images selected yet. Drag & drop files above or choose from your folder to begin.</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Control Panel & Action Bar -->
+          <aside class="studio-sidebar">
+            <div class="control-panel-card">
+              <div class="panel-header">
+                <div class="panel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </div>
+                <h2 class="panel-title">Conversion Settings</h2>
+              </div>
+
+              <!-- Setting: Target Output Format -->
+              <div class="setting-group">
+                <label for="target-format" class="setting-label">Target Format</label>
+                <div class="select-wrapper">
+                  <select id="target-format" class="custom-select">
+                    <option value="pdf">PDF Document (.pdf)</option>
+                    <option value="png">PNG Image (.png)</option>
+                    <option value="jpeg">JPG Image (.jpg)</option>
+                    <option value="webp">WebP Modern Image (.webp)</option>
+                  </select>
+                </div>
+                <span class="setting-hint" id="format-hint">All images will be compiled into a single PDF document.</span>
+              </div>
+
+              <!-- PDF Options Group (Conditionally Displayed) -->
+              <div id="pdf-options" class="options-subgroup">
+                <div class="subgroup-divider">
+                  <span>PDF Document Options</span>
+                </div>
+
+                <!-- Orientation -->
+                <div class="setting-group">
+                  <label for="pdf-orientation" class="setting-label">Orientation</label>
+                  <div class="select-wrapper">
+                    <select id="pdf-orientation" class="custom-select">
+                      <option value="auto">Auto-Detect per image</option>
+                      <option value="p">Portrait (Vertical)</option>
+                      <option value="l">Landscape (Horizontal)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Page Size -->
+                <div class="setting-group">
+                  <label for="pdf-page-size" class="setting-label">Page Dimensions</label>
+                  <div class="select-wrapper">
+                    <select id="pdf-page-size" class="custom-select">
+                      <option value="a4">Standard A4 (210 × 297 mm)</option>
+                      <option value="letter">US Letter (8.5 × 11 in)</option>
+                      <option value="fit">Auto-Fit to Image Aspect Ratio</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Margins -->
+                <div class="setting-group">
+                  <label for="pdf-margin" class="setting-label">Page Margins</label>
+                  <div class="select-wrapper">
+                    <select id="pdf-margin" class="custom-select">
+                      <option value="none">None (Border to Border)</option>
+                      <option value="small" selected>Small (10 mm)</option>
+                      <option value="normal">Normal (20 mm)</option>
+                      <option value="large">Large (30 mm)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Fit Style -->
+                <div class="setting-group">
+                  <label for="pdf-fit" class="setting-label">Image Placement</label>
+                  <div class="select-wrapper">
+                    <select id="pdf-fit" class="custom-select">
+                      <option value="contain" selected>Fit Entire Image (Preserve Aspect)</option>
+                      <option value="fill">Fill Entire Page Area</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Image Format Options Group (Conditionally Displayed) -->
+              <div id="image-options" class="options-subgroup hidden">
+                <div class="subgroup-divider">
+                  <span>Image Quality & Scaling</span>
+                </div>
+
+                <!-- Quality Slider -->
+                <div class="setting-group" id="quality-setting-group">
+                  <div class="slider-label-row">
+                    <label for="image-quality" class="setting-label">Output Quality</label>
+                    <span id="quality-val" class="slider-badge">92%</span>
+                  </div>
+                  <input type="range" id="image-quality" min="10" max="100" value="92" class="custom-slider">
+                  <span class="setting-hint">Higher quality yields clearer images with larger file sizes.</span>
+                </div>
+
+                <!-- Background Color for Alpha Channels (JPEG / Flatten) -->
+                <div class="setting-group" id="bg-color-group">
+                  <label for="bg-color-picker" class="setting-label">Background Fill Color</label>
+                  <div class="color-picker-row">
+                    <input type="color" id="bg-color-picker" value="#ffffff" class="color-input">
+                    <span class="color-desc">Replaces transparency for formats without alpha support (e.g. JPG).</span>
+                  </div>
+                </div>
+
+                <!-- Scale / Resize -->
+                <div class="setting-group">
+                  <label for="image-scale" class="setting-label">Output Resolution Scale</label>
+                  <div class="select-wrapper">
+                    <select id="image-scale" class="custom-select">
+                      <option value="1">100% (Original Size)</option>
+                      <option value="0.75">75% (3/4 Scale)</option>
+                      <option value="0.5">50% (Half Scale)</option>
+                      <option value="0.25">25% (Quarter Scale)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Output File Name -->
+              <div class="setting-group">
+                <label for="output-filename" class="setting-label">Output File Name</label>
+                <input type="text" id="output-filename" class="custom-input" placeholder="converted-doc" value="omni-converted">
+              </div>
+
+              <!-- Action Bar -->
+              <div class="panel-action-bar">
+                <button id="btn-convert" class="btn btn-primary btn-block btn-lg" disabled>
+                  <span class="btn-spinner hidden"></span>
+                  <svg class="btn-action-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span id="btn-convert-text">Convert & Download</span>
+                </button>
+              </div>
+
+              <!-- Progress Indicator -->
+              <div id="progress-container" class="progress-wrapper hidden">
+                <div class="progress-label-row">
+                  <span id="progress-status-text" class="progress-status">Processing files...</span>
+                  <span id="progress-percent" class="progress-percent">0%</span>
+                </div>
+                <div class="progress-track">
+                  <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Completion Banner -->
+              <div id="completion-banner" class="completion-card hidden">
+                <div class="completion-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <div class="completion-details">
+                  <h4 class="completion-title">Conversion Complete!</h4>
+                  <p id="completion-msg" class="completion-text">Your file has been generated and downloaded.</p>
+                  <a id="btn-redownload" href="#" class="btn-link">Click here if download didn't start</a>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: PRIVACY & SECURITY POLICY (#privacy) -->
+    <section id="view-privacy" class="view-section">
+      <div class="container article-container">
+        <div class="article-header">
+          <div class="shield-badge">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span>Privacy First Architecture</span>
+          </div>
+          <h1 class="article-title">Client-Side Privacy & Security Guarantee</h1>
+          <p class="article-subtitle">How OmniConvert processes your confidential documents without transmitting a single byte to the internet.</p>
+        </div>
+
+        <div class="article-body">
+          <div class="privacy-callout">
+            <div class="callout-icon">🔒</div>
+            <div class="callout-content">
+              <h3>Strict Zero-Server Upload Policy</h3>
+              <p>
+                Unlike traditional online converters that upload your photos, sensitive invoices, identification cards, 
+                and legal documents to third-party cloud servers, OmniConvert executes <strong>100% locally inside your browser engine</strong>.
+              </p>
+            </div>
+          </div>
+
+          <h2>How Local In-Browser Processing Works</h2>
+          <p>
+            When you select or drop images into OmniConvert:
+          </p>
+          <ul class="article-list">
+            <li>
+              <strong>HTML5 File API:</strong> Files are read directly from your local filesystem into temporary browser memory using <code>URL.createObjectURL()</code> and the standard <code>FileReader</code> interface.
+            </li>
+            <li>
+              <strong>Offscreen HTML5 Canvas Rendering:</strong> When converting between PNG, JPG, and WebP, pixel transformations are calculated natively by your device's GPU and CPU via the browser's <code>CanvasRenderingContext2D</code> engine.
+            </li>
+            <li>
+              <strong>Client-Side PDF Compilation:</strong> Document structuring and vector rendering are executed completely inside your browser tab using the standalone <code>jsPDF</code> engine.
+            </li>
+            <li>
+              <strong>In-Memory Archiving:</strong> Batch image archives are zipped locally in JavaScript memory using <code>JSZip</code> and delivered via virtual blob URLs directly to your Downloads folder.
+            </li>
+          </ul>
+
+          <h2>Memory Cleanup & Sandbox Protection</h2>
+          <p>
+            All generated object URLs are explicitly released via <code>URL.revokeObjectURL()</code> when you remove an item, clear the queue, or navigate away. Closing the browser tab destroys all memory buffers immediately. No cookies, tracking scripts, or analytics profiles are used.
+          </p>
+
+          <div class="verification-box">
+            <h3>Verify It Yourself</h3>
+            <p>
+              You can verify this claim at any time: open your browser's Developer Tools (<kbd>F12</kbd>), navigate to the <strong>Network</strong> tab, disconnect your Wi-Fi, and run any conversion. Everything will continue to function flawlessly offline!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: ABOUT (#about) -->
+    <section id="view-about" class="view-section">
+      <div class="container article-container">
+        <div class="article-header">
+          <h1 class="article-title">About OmniConvert</h1>
+          <p class="article-subtitle">A modern, high-performance vanilla web suite built for privacy, accessibility, and speed.</p>
+        </div>
+
+        <div class="article-body">
+          <h2>Philosophy & Engineering Principles</h2>
+          <p>
+            OmniConvert was designed from the ground up to eliminate the bloated dependencies, slow cloud queues, and privacy hazards common to modern web utility sites.
+          </p>
+
+          <div class="tech-stack-cards">
+            <div class="tech-card">
+              <h3>Pure Vanilla Web</h3>
+              <p>Constructed with modern semantic HTML5, CSS3 Custom Properties, and ES6+ JavaScript. Zero frameworks, zero bundlers, zero bloatware.</p>
+            </div>
+            <div class="tech-card">
+              <h3>jsPDF Engine</h3>
+              <p>High-precision PDF generation with support for multiple page orientations, custom margins, and crisp vector image embeds.</p>
+            </div>
+            <div class="tech-card">
+              <h3>Offscreen Canvas</h3>
+              <p>Instant pixel-level format transcoding, background transparency correction, and compression control using native browser APIs.</p>
+            </div>
+            <div class="tech-card">
+              <h3>JSZip Archiving</h3>
+              <p>Seamless asynchronous multi-file bundling directly in client memory with zero server roundtrips.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="brand-logo footer-logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <span class="brand-text">Omni<span class="brand-accent">Convert</span></span>
+        </div>
+        <p class="footer-tagline">Modern, private, client-side document and image conversion suite.</p>
+        <div class="footer-badge-pill">
+          <span class="status-indicator"></span>
+          <span>100% Client-Side • No Data Collected</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-title">Conversion Tools</h4>
+        <ul class="footer-links">
+          <li><a href="#image-to-pdf">Image to PDF</a></li>
+          <li><a href="#jpg-to-png">JPG to PNG</a></li>
+          <li><a href="#png-to-jpg">PNG to JPG</a></li>
+          <li><a href="#webp-converter">WebP Converter</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <h4 class="footer-nav-title">Security & Info</h4>
+        <ul class="footer-links">
+          <li><a href="#privacy">Zero-Server Policy</a></li>
+          <li><a href="#about">About & Architecture</a></li>
+          <li><a href="#home">Back to Top</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; 2026 OmniConvert. All processing occurs locally on your device.</p>
+    </div>
+  </footer>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
